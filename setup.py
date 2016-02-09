@@ -7,7 +7,7 @@ setup(
   author = 'Andrew Jefferson',
   author_email = 'andyj.trinity@gmail.com',
   url = 'https://github.com/eastlondoner/tdash', # use the URL to the github repo
-  download_url = 'https://github.com/eastlondoner/tdash/tarball/0.1', # I'll explain this in a second
+  download_url = 'https://github.com/eastlondoner/tdash/tarball/0.4',
   keywords = [], # arbitrary keywords
   classifiers = [],
 )
