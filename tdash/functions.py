@@ -78,3 +78,19 @@ def attempt(fn, on_exception, catch_exception=Exception):
 ###
 def on_exception(fn, on_exception, catch_exception=Exception):
     return wrap(fn, lambda f: attempt(f, on_exception=on_exception, catch_exception=catch_exception))
+
+
+def result(fn_or_value, *args, **kwargs):
+    """
+     If argument is a function execute it. If it is a value, return it.
+     Useful for handling lazy execution of default cases:
+     e.g.
+     _.result(some_dict.get(key, lambda: ))
+    :param fn_or_value:
+    :param args:
+    :param kwargs:
+    :return:
+    """
+    if inspect.isfunction(fn_or_value):
+        return safe_partial(fn_or_value, *args, **kwargs)()
+    return fn_or_value
