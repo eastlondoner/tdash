@@ -4,13 +4,15 @@ import inspect
 from generators import count
 
 
-def retry_n_times(fn, n, exception=Exception, interval=0, args=(), kwargs={}):
+def retry_n_times(fn, n, exception=Exception, interval=0, on_exception=None, args=(), kwargs={}):
     for n in range(n):
         try:
             return fn(*args, **kwargs)
-        except exception:
+        except exception as e:
             if interval > 0:
                 time.sleep(interval)
+            if on_exception:
+                on_exception(e)
 
 
 ###
