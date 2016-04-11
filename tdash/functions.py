@@ -96,3 +96,24 @@ def result(fn_or_value, *args, **kwargs):
     if inspect.isfunction(fn_or_value):
         return safe_partial(fn_or_value, *args, **kwargs)()
     return fn_or_value
+
+
+###
+# I forgot what the note you wanted me to add here was, something about tuples as keys?
+###
+def memoize(f):
+    """
+    Decorator to memoize a function taking one or more arguments.
+    Uses per-instance cache. Does not have a method to reset cache.
+
+    :param decorated_function: Function to be decorated
+    : return:
+    """
+    cache = {}
+    def decorated_function(*args):
+        if args in cache:
+            return cache[args]
+        else:
+            cache[args] = f(*args)
+            return cache[args]
+    return decorated_function
