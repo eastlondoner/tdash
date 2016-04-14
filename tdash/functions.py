@@ -96,3 +96,35 @@ def result(fn_or_value, *args, **kwargs):
     if inspect.isfunction(fn_or_value):
         return safe_partial(fn_or_value, *args, **kwargs)()
     return fn_or_value
+
+
+###
+# Works with class methods when defined outside the class
+# Does not work with unhashable arguments; hence does not work with **kwargs, which is a dict
+# Examples: 1. Fibonacci
+# @memoize
+# def fib(n):
+# '''Returns the nth number in the Fibonacci series (n > 0)'''
+#     return 1 if (n == 1 or n == 2) else (fib(n-1) + fib(n-2))
+# print fib(5)
+# 2. Sum
+# @memoize
+# def mult(a, b):
+#     return a * b
+###
+def memoize(f):
+    """
+    Decorator to memoize a function taking one or more arguments.
+    Uses per-instance cache. Does not have a method to reset cache.
+
+    :param decorated_function: Function to be decorated
+    : return:
+    """
+    cache = {}
+    def decorated_function(*args):
+        if args in cache:
+            return cache[args]
+        else:
+            cache[args] = f(*args)
+            return cache[args]
+    return decorated_function
