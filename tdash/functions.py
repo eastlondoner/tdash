@@ -99,7 +99,18 @@ def result(fn_or_value, *args, **kwargs):
 
 
 ###
-# I forgot what the note you wanted me to add here was, something about tuples as keys?
+# Works with class methods when defined outside the class
+# Does not work with unhashable arguments; hence does not work with **kwargs, which is a dict
+# Examples: 1. Fibonacci
+# @memoize
+# def fib(n):
+# '''Returns the nth number in the Fibonacci series (n > 0)'''
+#     return 1 if (n == 1 or n == 2) else (fib(n-1) + fib(n-2))
+# print fib(5)
+# 2. Sum
+# @memoize
+# def mult(a, b):
+#     return a * b
 ###
 def memoize(f):
     """
