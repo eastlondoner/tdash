@@ -1,5 +1,6 @@
 
-python setup.py sdist upload -r pypi
+python setup.py sdist 
+twine upload dist/*
 
 conda skeleton pypi tox
 conda build tox

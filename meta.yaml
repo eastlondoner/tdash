@@ -1,0 +1,11 @@
+package:
+  name: tdash
+  version: "0.0.9
+
+source:
+  path: tdash
+  
+requirements:
+  run:
+    - python
+    - pydash
