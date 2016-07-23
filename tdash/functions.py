@@ -5,7 +5,9 @@ from generators import count
 
 
 def retry_n_times(fn, n, exception=Exception, interval=0, on_exception=None, args=(), kwargs={}):
-    for n in range(n):
+    for i in range(n):
+        if i == n:  # Last try so dont catch exception
+            return fn(*args, **kwargs)
         try:
             return fn(*args, **kwargs)
         except exception as e:
@@ -18,7 +20,7 @@ def retry_n_times(fn, n, exception=Exception, interval=0, on_exception=None, arg
 ###
 # Function composition is a way of combining functions such that the result of each function
 # is passed as the argument of the next function.
-# For example, the composition of two functions f and g is denoted f(g(x))
+# For example, the composition of two functions f and g is f(g(x)) or compose(f,g)(x)
 ###
 def compose(*funcs): return lambda x: reduce(lambda v, f: f(v), reversed(funcs), x)
 
