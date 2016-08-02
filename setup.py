@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'tdash',
   packages = ['tdash'], # this must be the same as the name above
-  version = '0.0.9',
+  version = '0.0.10',
   description = 'Collection of utils inspired by underscore and lodash. No guarantees that I will not change this on a whim',
   author = 'Andrew Jefferson',
   author_email = 'andyj.trinity@gmail.com',

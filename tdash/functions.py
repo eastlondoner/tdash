@@ -4,9 +4,12 @@ import inspect
 from generators import count
 
 
-def retry_n_times(fn, n, exception=Exception, interval=0, on_exception=None, args=(), kwargs={}):
+def retry_n_times(fn, n, exception=Exception, interval=0, on_exception=None, args=(), kwargs=None):
+    if kwargs is None:
+        kwargs = {}  # dictionarys are mutable so not ideal for default parameter values.
+
     for i in range(n):
-        if i == n:  # Last try so dont catch exception
+        if i == n-1:  # Last try so don't catch exception
             return fn(*args, **kwargs)
         try:
             return fn(*args, **kwargs)
