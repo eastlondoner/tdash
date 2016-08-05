@@ -117,19 +117,22 @@ def result(fn_or_value, *args, **kwargs):
 # def mult(a, b):
 #     return a * b
 ###
-def memoize(f):
+def memoize(f, key_fn=lambda x: x):
     """
     Decorator to memoize a function taking one or more arguments.
     Uses per-instance cache. Does not have a method to reset cache.
 
+    :param key_fn: Function which takes method arguments and converts them to a key for the results cache
     :param decorated_function: Function to be decorated
     : return:
     """
     cache = {}
+
     def decorated_function(*args):
-        if args in cache:
-            return cache[args]
+        key = key_fn(*args)
+        if key in cache:
+            return cache[key]
         else:
-            cache[args] = f(*args)
-            return cache[args]
+            cache[key] = f(*args)
+            return cache[key]
     return decorated_function
