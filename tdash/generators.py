@@ -3,6 +3,13 @@ import pydash.arrays as arrays
 import itertools
 
 
+def find(gen, predicate):
+    for item in gen:
+        if predicate(item):
+            return item
+    return None
+
+
 def count(gen):
     return functools.reduce(lambda x,y: x + 1, gen, 0)
 
