@@ -2,7 +2,7 @@ import time
 import functools
 import inspect
 from generators import count
-
+from threading import RLock
 
 def retry_n_times(fn, n, exception=Exception, interval=0, on_exception=None, args=(), kwargs=None):
     if kwargs is None:
@@ -103,33 +103,38 @@ def result(fn_or_value, *args, **kwargs):
     return fn_or_value
 
 
-###
-# Works with class methods when defined outside the class
-# Does not work with unhashable arguments; hence does not work with **kwargs, which is a dict
-# Examples: 1. Fibonacci
-# @memoize
-# def fib(n):
-# '''Returns the nth number in the Fibonacci series (n > 0)'''
-#     return 1 if (n == 1 or n == 2) else (fib(n-1) + fib(n-2))
-# print fib(5)
-# 2. Sum
-# @memoize
-# def mult(a, b):
-#     return a * b
-###
-def memoize(f, key_fn=lambda x: x):
+class cache_function(object):
+    def __init__(self, key_fn=lambda x:x):
+        self.key_fn = key_fn
+        self.cache = dict()
+        self.lock = RLock()
+
+    def __call__(self, f):
+        def decorated_function(*args):
+            key = self.key_fn(*args)
+            self.lock.acquire()
+            try:
+                if key in self.cache:
+                    return self.cache[key]
+                else:
+                    self.cache[key] = f(*args)
+                    return self.cache[key]
+            finally:
+                self.lock.release()
+        setattr(decorated_function,'_cache', self.cache)
+        return decorated_function
+
+def memoize(f):
     """
     Decorator to memoize a function taking one or more arguments.
     Uses per-instance cache. Does not have a method to reset cache.
-
-    :param key_fn: Function which takes method arguments and converts them to a key for the results cache
-    :param decorated_function: Function to be decorated
+    :param f: Function to be decorated
     : return:
     """
     cache = {}
 
     def decorated_function(*args):
-        key = key_fn(*args)
+        key = args
         if key in cache:
             return cache[key]
         else:
