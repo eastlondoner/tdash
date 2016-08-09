@@ -1,6 +1,7 @@
 import functools
-import pydash.arrays as arrays
 import itertools
+
+import pydash.arrays as arrays
 
 
 def find(gen, predicate):
