@@ -1,14 +1,10 @@
 import functools
 import pydash.arrays as arrays
+import pydash.collections as collections
 import itertools
 
 
-def find(gen, predicate):
-    for item in gen:
-        if predicate(item):
-            return item
-    return None
-
+find = collections.find
 
 def count(gen):
     return functools.reduce(lambda x,y: x + 1, gen, 0)
