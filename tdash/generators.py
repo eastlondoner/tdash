@@ -1,7 +1,8 @@
 import functools
+import itertools
+
 import pydash.arrays as arrays
 import pydash.collections as collections
-import itertools
 
 
 find = collections.find

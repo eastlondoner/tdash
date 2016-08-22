@@ -1,8 +1,10 @@
 import time
 import functools
 import inspect
-from generators import count
 from threading import RLock
+
+from .generators import count
+
 
 def retry_n_times(fn, n, exception=Exception, interval=0, on_exception=None, args=(), kwargs=None):
     if kwargs is None:
