@@ -11,7 +11,7 @@ def measure_time(name=None):
             t0 = time()
             result = func(*args, **kwargs)
             t = time() - t0
-            print called, t
+            print(called, t)
             return result
         return func_wrapper
     return decorator
@@ -23,5 +23,5 @@ class Stopwatch(object):
         self.inside_mg = inside_mg
 
     def print_time(self, msg):
-        print self.inside_mg, 'Time: ', msg, ':   ', time() - self.start_time
+        print(self.inside_mg, 'Time: ', msg, ':   ', time() - self.start_time)
         self.start_time = time()
