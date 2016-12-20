@@ -35,3 +35,6 @@ def split(gen, n=1):
     it = iter(gen)
     for first in it:
         yield itertools.chain([first], itertools.islice(it, n - 1))
+
+# ALIAS
+chunk = split
